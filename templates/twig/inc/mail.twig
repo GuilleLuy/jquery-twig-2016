@@ -1,0 +1,99 @@
+{% set id_body = 'body_contact'  %}
+{% extends '@theme/base.twig' %}
+{% block titulo %}E-mail | {{ contact_text }}{% endblock %}
+{% block description %}{{ contact_text }} - Email{% endblock %}
+{% block head %}
+{{ parent() }}
+<script>
+var $title_home = '{{ title_home|raw }}', $title_diseno = "{{ title_diseno }}", $title_progra = "{{ title_progra }}", $portfolio =  "{{ portfolio }}", $aca = "{{ aca }}", $mail = "{{ cliente_mail_1 }}", $share = "{{ share }}", $close = "{{ close }}", $fullscreen = "{{ fullscreen }}", $next = "{{ next }}", $prev = "{{ prev }}", $fancy_error = "{{ fancy_error|raw }}", $slide_play = "{{ slide_play }}", $slide_stop = "{{ slide_stop }}", $thums = "{{ thums }}", $descargar = "{{ descargar }}", $zoom = "{{ zoom }},", $url_works = "{{url_works}}";
+</script>
+{% endblock %}
+{% block content %}
+{%
+  include '@theme/inc/ssi.header-nav.twig'
+%}
+  <div id="contact-form" class="{{ lang }}_form">
+    <div id="status"><h1>{{ contact_text }}</h1></div>
+    <div>
+      <label>{{ form_name }}</label>
+      <span id="userName-info" class="info"></span><br/>
+      <input type="text" name="userName" id="userName" placeholder="{{ form_name_ph }}" class="input-box">
+    </div>
+    <div>
+      <label>Email</label>
+      <span id="userEmail-info" class="info"></span><br/>
+      <input type="text" name="userEmail" id="userEmail" placeholder="{{ form_email_ph }}" class="input-box">
+    </div>
+    <div>
+      <label>{{ form_subject }}</label> 
+      <span id="subject-info" class="info"></span><br/>
+      <input type="text" name="subject" id="subject" placeholder="{{ form_subject_ph }}" class="input-box">
+    </div>
+    <div>
+      <label>{{ form_mensaje }}</label> 
+      <span id="content-info" class="info"></span><br/>
+      <textarea name="content" id="content" class="input-box" placeholder="{{ form_mensaje_ph }}" cols="60" rows="6"></textarea>
+    </div>
+    <div>
+      <button name="submit" class="btnAction input-box" onClick="sendContact();">{{ form_send }}</button>
+    </div>
+    <strong>{{ contact_text }}<strong>{{ contact_text }}<strong>{{ contact_text }}</strong><strong>{{ contact_text }}<strong>{{ contact_text }}<strong>{{ contact_text }}<strong>{{ contact_text }}<strong>{{ contact_text }}<strong>{{ contact_text }}<strong>{{ contact_text }}<strong>{{ contact_text }}</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>
+  </div>
+{% endblock %}
+{% block script %}
+{{ parent() }}
+<script>
+  var $required = '{{ required }}';
+  var $invalid = '{{ invalid }}';
+  function sendContact() {
+    var valid;  
+    valid = validateContact();
+    if(valid) {
+      $.ajax({
+      url: "/inc/contact_mail.php",
+      data:'userName='+$("#userName").val()+'&userEmail='+$("#userEmail").val()+'&subject='+$("#subject").val()+'&content='+$(content).val(),
+      type: "POST",
+      success:function(data){
+      $("#status").html(data);
+      },
+      error:function (){}
+      });
+    }
+  }
+  function validateContact() {
+    var valid = true; 
+    $(".input-box").removeClass('error'); 
+    $(".info").html('');
+      if(!$("#userName").val()) {
+      $("#userName-info").html($required);
+      $("#userName").addClass('error');
+      valid = false;
+    }
+    if(!$("#userEmail").val()) {
+      $("#userEmail-info").html($required);
+      $("#userEmail").addClass('error');
+      valid = false;
+    }
+    if(!$("#userEmail").val().match(/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/)) {
+      $("#userEmail-info").html($invalid);
+      $("#userEmail").addClass('error');
+      valid = false;
+    }
+    if(!$("#subject").val()) {
+      $("#subject-info").html($required);
+      $("#subject").addClass('error');
+      valid = false;
+    }
+    if(!$("#content").val()) {
+      $("#content-info").html($required);
+      $("#content").addClass('error');
+      valid = false;
+    }
+    return valid;
+  }
+    $('li.trabajos').on('click',function() {
+    window.location.href = '/';
+  });
+</script>
+{% include '@theme/inc/jsPreloader.twig' %}
+{% endblock %}

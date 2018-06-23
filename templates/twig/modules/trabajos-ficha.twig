@@ -1,0 +1,88 @@
+{% set id_body = 'body_ficha'  %} 
+{% extends '@theme/base.twig' %}
+{% block titulo %}&#10030; {% for ficha in trabajos_ficha %}{% set titulo_utf = ficha.titulo|convert_encoding('UTF-8', 'ISO-8859-1')  %}{{ titulo_utf ~ ' ~ ' ~ CLIENTE_WEB }}{% endfor %}{% endblock %}
+{% block description %}{% for ficha in trabajos_ficha %}{% set titulo_utf = ficha.titulo|convert_encoding('UTF-8', 'ISO-8859-1')  %}{{ titulo_utf ~ ' - ' ~ texto }}{% endfor %}{% endblock %}
+{% block head %}
+{{ parent() }}
+<script>
+var $title_home = '{{ title_home|raw }}', $title_diseno = "{{ title_diseno }}", $title_progra = "{{ title_progra }}", $portfolio =  "{{ portfolio }}", $mail = "{{ cliente_mail_1 }}", $share = "{{ share }}", $close = "{{ close }}", $fullscreen = "{{ fullscreen }}", $next = "{{ next }}", $prev = "{{ prev }}", $fancy_error = "{{ fancy_error|raw }}", $slide_play = "{{ slide_play }}", $slide_stop = "{{ slide_stop }}", $thums = "{{ thums }}", $descargar = "{{ descargar }}", $zoom = "{{ zoom }}", $url_works = "{{url_works}}", $gallery = {% for ficha in trabajos_ficha %}{{ ficha.galeria }}{% endfor %};
+</script>
+{% endblock %}
+{% block content %}
+
+<header id="header-ficha">
+{% if (lang == 'en') %}
+{% set lang_url %}{{ '/' ~ url_works_switch }}{% for url in ficha_link_es %}{{ url.url }}{% endfor %}{% endset %}
+{% endif %}
+{% if (lang == 'es') %}
+{% set lang_url %}{{ '/' ~ url_works_switch }}{% for url in ficha_link_en %}{{ url.url }}{% endfor %}{% endset %}
+{% endif %}
+{% include '@theme/inc/ssi.header-nav.twig' %}
+</header>
+{% for ficha in trabajos_ficha %}
+{% set titulo_utf = ficha.titulo|convert_encoding('UTF-8', 'ISO-8859-1')  %}
+
+  <section id="ficha" class="work_{{ ficha.ID }}">{# {% if ficha.galeria <= '1' %}gigante{% endif %} #}
+    <article>
+      <h1>{{ titulo_utf }}</h1>
+{#       <p>{{ host ~ ' ** ' ~ url  }} </p>#}
+      <a id="show">Info</a>
+      <div id='desc'>{{ ficha.descripcion|convert_encoding('UTF-8', 'ISO-8859-1')|raw }}</p>
+    </article>
+    <div id='media-box'>
+    <nav id="gallery-nav">
+      <a href='javascript:' id="img_bfr" title="{{ ir_anterior }}"><span>{{ ir_anterior }}</span></a>
+      <a href='javascript:' id="img_nxt" title="{{ ir_siguiente }}"><span>{{ ir_siguiente }}</span></a>
+    </nav>
+{% if ficha.video is empty %}
+      <figure>
+        <img id="media" alt="imagen {{ titulo_utf }}" src="{{ img_gal_url ~ ficha.img_path }}-1.jpg"/>
+      </figure>
+{% else %}
+      <div id='video'>
+ {{ ficha.video|raw }}
+      </div>
+ {% endif %}
+{% if ficha.galeria > '1' %}
+      <ul id='gallery' class="gal-{{ ficha.galeria }}">
+{% for key in trabajos_gallery|keys %}
+{% set nums_img = {'0':'1', '1':'2', '2':'3', '3':'4', '4':'5', '5':'6', '6':'7', '7':'8', '8':'9', '9':'10', '10':'11','11':'12','12':'13','13':'14', '14':'15', '15':'16', '16':'17', '17':'18', '18':'19', '19':'20', '20':'21'} %}
+{% set valor = key|replace(nums_img) %}
+{% if ficha.video is empty %}
+        <li> 
+          <a class="img-{{valor}}" href="{{ img_gal_url ~ ficha.img_path ~ '-'  ~ BIG_SIZE ~ valor}}.jpg" title="{{ titulo_utf }}">
+            <img alt="{{ titulo_utf }}" src="{{ img_gal_url ~ ficha.img_path ~ '-' ~ valor ~  THUMB_SIZE }}.jpg" rel="{{ valor }}"/>
+          </a>
+        </li>
+{% else %}
+{# 
+-- este hacia un href especial pero no hace falta
+{% if valor == '1' %}
+<li>
+          <a class="img-{{valor}}" href="javascript:" title="{{ titulo_utf }}">
+            <img alt="{{ titulo_utf }}" src="{{ img_gal_url ~ ficha.img_path ~ '-' ~ valor ~  THUMB_SIZE }}.jpg" rel="{{ valor }}"/>
+          </a>
+        </li> {% else %} -- el que quedo abajo... {% endif %} #}
+        <li>
+          <a class="img-{{valor}}" href="{{ img_gal_url ~ ficha.img_path ~ '-'  ~ BIG_SIZE ~ valor}}.jpg" title="{{ titulo_utf }}">
+            <img alt="{{ titulo_utf }}" src="{{ img_gal_url ~ ficha.img_path ~ '-' ~ valor ~  THUMB_SIZE }}.jpg" rel="{{ valor }}"/>
+          </a>
+        </li>
+{% endif %}
+{% endfor %}
+      </ul>
+{% endif %}
+      <em>{{ ficha.fecha|slice(0, -6) }}hs</em>
+    </div>
+  </section>
+{% endfor %}
+{% endblock %}
+{% block script %}{% if 'fancybox' in url %}{% else %}{% endif %}
+{{ parent() }}
+<script src='/js/trabajos-ficha.js'></script>
+ {% for ficha in trabajos_ficha %}{% if ficha.video is empty %}<script src='/js/trabajos-ficha-img.js'></script>{% else %}<script src='/js/trabajos-ficha-video.js'></script>{% endif %}{% endfor %}
+{# Para los que tengan más de un video, hacer: {% if ficha.ID == '7' %}{% endif %} 
+#}
+{% include '@theme/inc/jsPreloader.twig' %}
+</script>
+{% endblock %}

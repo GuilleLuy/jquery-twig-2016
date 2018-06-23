@@ -1,0 +1,52 @@
+  {% set id_body = 'body_home'  %}
+  {% extends '@theme/base.twig' %}
+  {% block titulo %}{{ titulo ~ ' | ' ~ CLIENTE_WEB }}{% endblock %}
+  {% block description %}{{ titulo ~ ' | ' ~ texto }}{% endblock %}
+  {% block head %}
+  {{ parent() }}
+  <script>
+  var $title_home = '{{ title_home|raw }}', $title_diseno = "{{ title_diseno }}", $title_progra = "{{ title_progra }}", $portfolio =  "{{ portfolio }}", $aca = "{{ aca }}", $share = "{{ share }}", $close = "{{ close }}", $fullscreen = "{{ fullscreen }}", $next = "{{ next }}", $prev = "{{ prev }}", $fancy_error = "{{ fancy_error|raw }}", $slide_play = "{{ slide_play }}", $slide_stop = "{{ slide_stop }}", $thums = "{{ thums }}", $descargar = "{{ descargar }}", $zoom = "{{ zoom }}", $mail = "{{ cliente_mail_1 }}", $url_works = "{{url_works}}";
+  </script>
+  {% endblock %}
+  {% block content %}
+{% set lang_url %}{{ url_home }}{% endset %}
+  <header id='header_home'>
+    <p id='punto' class='nar'><span>{{ empezar }}</span></p>
+  {% include '@theme/inc/ssi.header-nav.twig' %}
+
+    <div id='home-pres'>
+      <h1 id='h1-title'>{{ title_home|raw }}</h1>
+    </div>
+  </header>
+
+    <aside id='services'>
+  {% include '@theme/inc/ssi.index-services.twig' %}
+
+    </aside>
+
+    <section id='works'>
+      <h2 class="hide">{{ trab_dest }}</h2>
+  {% for row in trabajos_dest %}
+  {# {% set nums_img = {'1-':'', '2-':'', '3-':'', '4-':'', '5-':'', '6-':'', '7-':'', '8-':'', '9-':'', '10-':'', '11-':'', '12-':''} %} #}
+  {% set cats_utf8 = row.cats|convert_encoding('UTF-8', 'ISO-8859-1') %}
+      <article id='work_{{ row.id }}' class="{{ row.img_name }}">
+        <h2>
+          <span>{{ row.img_name }}</span>
+          <strong>{{ cats_utf8|replace({',':'</strong><strong>'})|raw }}</strong>
+          </h2>
+        <p>{{ row.desc|convert_encoding('UTF-8', 'ISO-8859-1') }}</p>
+        <img id="{{ info_final }}" alt=" | {{ cats_utf8 }}" srcset="{{ img_trab_url }}ss/{{ row.img_name }}.jpg 600w, {{ img_trab_url }}sm/{{ row.img_name }}.jpg 900w, {{ img_trab_url }}me/{{ row.img_name }}.jpg 1300w, {{ img_trab_url }}hd/{{ row.img_name }}.jpg 1920w" sizes="(max-width: 600px) 580px, (max-width: 899px) 780px, (max-width: 1400px) 1180px, 1620px" src="{{ img_trab_url }}me/{{ row.img_name }}.jpg " />
+      </article>
+  {% endfor %}
+    </section>
+  {% endblock %}
+
+  {% block footer_nav %}
+  {% include '@theme/inc/ssi.footer-nav.twig' %}
+  {% endblock %}
+
+  {% block script %}
+  {{ parent() }}
+  <script src='/js/index.js'></script>
+  {% include '@theme/inc/jsPreloader.twig' %}
+  {% endblock %}

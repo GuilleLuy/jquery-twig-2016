@@ -1,0 +1,85 @@
+{% set id_body = 'body_works'  %}
+{% extends '@theme/base.twig' %}
+{% block titulo %}{{ portfolio ~ ' ~ ' ~ CLIENTE_WEB }}{% endblock %}
+{% block description %}{{ portfolio ~ ', ' ~ titulo ~ ', ' ~ texto }}{% endblock %}
+{% block head %}
+{{ parent() }}
+<script>
+var $title_home = '{{ title_home|raw }}', $title_diseno = "{{ title_diseno }}", $title_progra = "{{ title_progra }}", $portfolio =  "{{ portfolio }}", $aca = "{{ aca }}", $mail = "{{ cliente_mail_1 }}", $share = "{{ share }}", $close = "{{ close }}", $fullscreen = "{{ fullscreen }}", $next = "{{ next }}", $prev = "{{ prev }}", $fancy_error = "{{ fancy_error|raw }}", $slide_play = "{{ slide_play }}", $slide_stop = "{{ slide_stop }}", $thums = "{{ thums }}", $descargar = "{{ descargar }}", $zoom = "{{ zoom }},", $url_works = "{{url_works}}";
+</script>
+{% endblock %}
+{% block content %}
+{% set lang_url %}{{ '/' ~ url_works_switch }}{% endset %}
+{%
+  include '@theme/inc/ssi.header-nav.twig'
+%}
+
+  <section id='works'>
+    <h2 class="title">{{ portfolio }}</h2>
+{# 
+
+
+COSAS QUE SE PUEDEN AGREGAR (Y mas que falten)
+
+    <ol id="menu-lista">
+      <li class="animacion">
+        <a href="#animacion"><strong>animacion</strong></a>
+        <ul>
+          <li><a href="#animacion-html5">html5</a></li>
+          <li><a href="#animacion-html5-js">html5 js Scrolleable</a></li>
+          <li><a href="#animacion-google">google ads</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#impresos"><strong>impresos</strong></a>
+        <ul>
+          <li><a href="#carteles">carteles</a></li>
+          <li><a href="#folletos">folletos</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#o"><strong>Agregar Videos, HTML o banner html vr como</strong></a>
+        <ul>
+          <li class=""></li>
+        </ul>
+      </li>
+    </ol>
+#}
+    <ol id="menu-lista">
+{% for cat in db_categories %}
+{% set name_utf8 = cat.name|convert_encoding('UTF-8', 'ISO-8859-1') %}
+      <li class="{{ name_utf8|replace({' ':"-",'á':"a",'é':"e",'í':"i",'ó':"o",'ú':"u",'ñ':"n"}) }}">
+        <a href="#{{ name_utf8|replace({'á':"a",'é':"e",'í':"i",'ó':"o",'ú':"u",'ñ':"n"}) }}">
+          <strong>{{ name_utf8 }}</strong>
+        </a>
+      </li>
+{% endfor %}
+      <li>
+        <a href="#all"><strong>todos</strong></a>
+      </li>
+    </ol>
+    <h1>Guillermo Luy</h1>
+{# echo "http://" . $ . $host; <p>{{ url  }}</p> #}
+    <ul id="trabajos-lista">
+{% for row in db_trabajos %}
+{% set title_utf8 = row.titulo|convert_encoding('UTF-8', 'ISO-8859-1') %}
+{# Para extraer lista de trabajos: <p>{{ row.ID }} - {{ title_utf8 }}</p> #}
+      <li id='work_{{ row.ID }}' class="{{ row.categoria|replace({',':''}) }}" style="background-image:url('{{ img_gal_url ~ row.img_path ~ '-1' ~ MED_SIZE }}.jpg'); background-repeat: no-repeat; "> 
+        <a title="{{ title_utf8 }}" data-fancybox data-type="ajax" data-src="/{{ url_works ~ row.url }}/">
+{# href="/{{ url_works ~ row.url }}/"  data-filter="#ficha" #}
+          <p>{{ row.fecha|slice(0, -6) }}hs</p>
+          <h2>{{ title_utf8 }}</h2>
+        </a>
+      </li>
+{% endfor %}
+    </ul>
+  </section>
+
+{# no veo necesario incluir el footer_nav #}
+
+{% endblock %}
+{% block script %}
+{{ parent() }}
+<script src='/js/trabajos.js'></script>
+{% include '@theme/inc/jsPreloader.twig' %}
+{% endblock %}
