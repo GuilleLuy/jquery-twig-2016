@@ -12,7 +12,6 @@ if (window.innerHeight) {
 
 $(document).ready(function() { 
 
-//  $('.link-'+$trab_13).attr('href', $img_trab_url+'hd/'+$trab_13+'.jpg');
   $('.link-'+$trab_12).attr('href', $img_trab_url+'hd/'+$trab_12+'.jpg');
   $('.link-'+$trab_11).attr('href', $img_trab_url+'hd/'+$trab_11+'.jpg');
   $('.link-'+$trab_10).attr('href', $img_trab_url+'hd/'+$trab_10+'.jpg');
@@ -53,7 +52,6 @@ $(document).ready(function() {
         } else {
           e.preventDefault();
           OpenServs();
-          // no mobile
           $btn_trab.unbind( "mouseover" );
         }
       }
@@ -70,19 +68,10 @@ $(document).ready(function() {
     .one('mouseover', function () {
         var $id = $(this).attr('id');
         var $letra = $id.replace("work_", "");
-        var $actual = '#work_' + $id;
         var $siguiente =  parseInt($letra) - 1;
         var $ir_siguiente = '#work_' + $siguiente;
 
-        // arrayzar
-
-  //  var $trabajos_array = [ $trab_12, $trab_11, $trab_10, $trab_9, $trab_8, $trab_7, $trab_6, $trab_5, $trab_4, $trab_3, $trab_2, $trab_1 ];
-    //    $.each( trabajos_array, function( i, val ) {
-    //      if($ir_siguiente == val ) {
-    //        $('<a class="icon-' + val +'"><span>' + val +'</span></a>').appendTo($sidebar);
-    //      }
-    //    });
-    //  $( "<p>" + val + "</p>" ).appendTo('.' + val )//( "Mine is " + val + "." );
+ 
 
         if($ir_siguiente == '#work_11' ) {
           $('<a class="icon-' + $trab_12 +'" title=' + $trab_12 +'><span>' + $trab_12 +'</span></a>').appendTo($sidebar);
@@ -118,8 +107,32 @@ $(document).ready(function() {
           $('<a class="icon-' + $trab_2 +'" title=' + $trab_2 +'><span>' + $trab_2 +'</span></a>').appendTo($sidebar);
         }
         if($ir_siguiente == '#work_0' ) {
-          $('<a class="icon-' + $trab_1 +'" title=' + $trab_12 +'><span>' + $trab_1 +'</span></a>').appendTo($sidebar);
+          $('<a class="icon-' + $trab_1 +'" title=' + $trab_1 +'><span>' + $trab_1 +'</span></a>').appendTo($sidebar);
         }
+
+
+        // var $article = $(this).attr('id');
+    
+        // if($id == $article ) {
+        //  $('<a class="icon-' + )) +'" title=' + $trab_+(parseInt(1)) +'><span>' + $trab_+(parseInt(1)) +'</span></a>').appendTo($sidebar);
+        // }
+
+        // arrayzar
+
+    //  $trabajos_array = [ $trab_12, $trab_11, $trab_10, $trab_9, $trab_8, $trab_7, $trab_6, $trab_5, $trab_4, $trab_3, $trab_2, $trab_1 ];
+    //    $.each( $trabajos_array, function( i, val ) {
+
+    //      if($ir_siguiente == val ) {
+    //        $('<a class="icon-' + val +'"><span>' + val +'</span></a>').appendTo($sidebar);
+    //      }
+    //    });
+    //  $( "<p>" + val + "</p>" ).appendTo('.' + val )//( "Mine is " + val + "." );
+
+
+        
+
+
+
 
         $('a.icon-'+$trab_12).on('click', function () {
             var x = $('#work_12').offset().top;
@@ -171,13 +184,14 @@ $(document).ready(function() {
         });
     })
 
+    
+
     .on('mouseover', function () {
       $(this)
         .css({'z-index':'1'})
         .find('h2').css({'opacity':'1'});
         var $id = $(this).attr('id');
         var $letra = $id.replace("work_", "");
-        var $actual = '#work_' + $id;
         var $siguiente =  parseInt($letra) - 1;
         var $ir_siguiente = '#work_' + $siguiente;
         var $anterior =  parseInt($letra) + 1;
@@ -192,13 +206,13 @@ $(document).ready(function() {
         }else{
           $('.to_before').removeClass('como_hideado');
         };
+
         if($ir_siguiente == '#work_0') {
           $('.to_next').addClass('como_hideado');
-          //$('.to_before').css({'left':'160px'});
         }else{
           $('.to_next').removeClass('como_hideado');
-          //$('.to_before').css({'left':'100px'});
         };
+
         // videos
         if($ir_siguiente == '#work_7') {
           $('#canapina-face-1').get(0).play();
@@ -210,6 +224,8 @@ $(document).ready(function() {
         }else{
           $('#pronto-express-spot').get(0).pause();
         };
+
+        
 
         // botones
         $('.to_next, .to_before, .to_top')
@@ -268,11 +284,10 @@ $(document).ready(function() {
     $sidebar.appendTo('#footer');
   });
 
-  $close_footer_nav
+  $close_menu
     .on('click', function() {
       $open_sidebar.appendTo($box_menu);
   });
-    
   $open_menu
     .on('click', function() {
       $open_sidebar.appendTo($footer_nav);

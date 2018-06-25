@@ -15,11 +15,10 @@
     $title = $('#h1-title'),
     $footer = $('footer'),
     $footer_nav = $('#footer_nav'),
-    $to_next = $('.to_next'), //.addClass('como_hideado'),
+    $to_next = $('.to_next'),
     $to_before = $('.to_before').addClass('como_hideado'),
     $to_top = $('.to_top').addClass('como_hideado'),
     $btn_cel = $('#btn_cel'),
-    $pres_black = $('#home-pres div#pres-black'),
     $header_home = $('#header_home'),
     $link_web = $('.link_web'),
     $link_3d = $('.link_3d'),
@@ -28,24 +27,24 @@
     $link_impr = $('.link_impr'),
     $link_todos = $('.link_todos'),
     $lugar_todos = $('.link_3d, .link_vid, .link_red, .link_impr'),
-    $pst = $('<span class="che" id="pst">pst..</span> <span class="che" id="aca">< '+ $aca +'</span> <span class="che" id="apalalala">!</span>')
+    $pst = $('<span class="che" id="pst">pst..</span> <span class="che" id="aca">< '+ $aca +'</span> <span class="che" id="apalalala">!</span>'),
+    $start_stage = $("<div id='pres-orange'></div><div id='pres-black'></div>"),
+    $pres_black = $('#home-pres div#pres-black'),
+    $open_menu = $('#open-menu').hide(),
+    $titulo_loco = '<span class="h1_1">Guill<span>ermo</span></span><span class="h1_2">Luy</span><span class="h1_3">'+ $title_diseno +' &amp;</span><span class="h1_4">'+ $title_progra +'</span></h1>'
   ;
 
-  $("<div id='pres-orange'></div><div id='pres-black'></div>").prependTo('#home-pres');
-
+  $start_stage.prependTo('#home-pres');
   $footer_nav.append('<div id="hidden-menu"></div>');
   $box_menu = $('#hidden-menu').hide();
 
-  var $open_menu = $('#open-menu').hide();
-
   $('<em class="close_text"></em>').prependTo('article h2');
-  $('<a class="close_nav" id="close_footer_nav"></a>').appendTo($footer_nav);
+  $('<a class="close_nav" id="close-menu"></a>').appendTo($footer_nav);
   $('<a class="open_sidebar"><span>Menu trabajos</span></a>').appendTo($footer_nav);
-
   $('<a class="open_text">Tt</a>').appendTo($footer_nav);
 
   var $close_text = $('.close_text');
-  var $close_footer_nav = $('#close_footer_nav'); //.hide();
+  var $close_menu = $('#close-menu');
   var $open_text = $('.open_text').hide();
   var $open_sidebar = $('.open_sidebar').hide();
   var $flags = $('.flags');
@@ -56,11 +55,10 @@
   function ocultaMenu() {
     $btn_serv.appendTo($box_menu);
     $btn_works.appendTo($box_menu);
-//    $btn_cel.appendTo($box_menu);
     $to_before.appendTo($box_menu);
     $to_next.appendTo($box_menu);
     $to_top.appendTo($box_menu);
-    $close_footer_nav.appendTo($box_menu);
+    $close_menu.appendTo($box_menu);
     $open_sidebar.appendTo($box_menu);
     $open_text.appendTo($box_menu);
     $flags.appendTo($box_menu);
@@ -73,11 +71,10 @@
   function muestraMenu() {
     $btn_serv.appendTo($menu);
     $btn_works.appendTo($menu);
-//    $btn_cel.appendTo($footer_nav);
     $to_before.appendTo($footer_nav);
     $to_next.appendTo($footer_nav);
     $to_top.appendTo($footer_nav);
-    $close_footer_nav.appendTo($footer_nav);
+    $close_menu.appendTo($footer_nav);
     $open_sidebar.appendTo($footer_nav);
     $open_text.appendTo($footer_nav);
     $flags.appendTo($menu);
@@ -87,29 +84,22 @@
     $footer_nav.removeClass('hided');
   }
 
-  $close_text
-    .on('click', function() {
+  $close_text.on('click', function() {
       $('article h2').hide();
       $open_text.show();
       $footer_nav.css({'min-width':'265px'});
   });
-
-  $open_text
-    .on('click', function() {
+  $open_text.on('click', function() {
       $('article h2').show();
      $(this).hide();
      $footer_nav.css({'min-width':'220px'});
   });
 
-
-  $close_footer_nav
-    .on('click', function() {
+  $close_menu.on('click', function() {
       ocultaMenu();
       $open_menu.show();
   });
-
-  $open_menu
-    .on('click', function() {
+  $open_menu.on('click', function() {
       muestraMenu();
       $(this).hide();
   });
@@ -123,171 +113,100 @@
     })
   ;
   
-  // las imagenes con ID y los articles con CLASS
-var $trab_no_mas = '#work_13',
-        $trab_13 = '', // nada aun
-        $trab_12 = 'vialfe',
-        $trab_11 = 'bounous',
-        $trab_10 = 'pronto-express',
-         $trab_9 = 'auto-v5',
-         $trab_8 = 'canapina',
-         $trab_7 = 'minfraestructura',
-         $trab_6 = 'marcas',
-         $trab_5 = 'folletos',
-         $trab_4 = 'cyd-schaffer',
-         $trab_3 = 'bodyski',
-         $trab_2 = 'xava-boards',
-         $trab_1 = 'carteles';
-
-  $title.html('<span class="h1_1">Guill<span>ermo</span></span><span class="h1_2">Luy</span><span class="h1_3">'+ $title_diseno +' &amp;</span><span class="h1_4">'+ $title_progra +'</span></h1>');
+  $title.html($titulo_loco);
   $pst.appendTo($header_home);
 
-  $link_todos
-    .on('click touchstart', function(){
-      var $donde = $lugar_todos;
-      $donde.addClass('shine').css({'float':'none', 'clear':'none'});
-      function explode(){
-        $donde.removeClass('shine').css({'float':'left', 'clear':'both'});
-      }
-      setTimeout(explode, 2000);
-      window.history.pushState({}, document.title, "/" + "");
-  });
+function shinealo($donde) {
+  $donde.addClass('shine').css({'float':'none', 'clear':'none'});
+  function explode(){
+    $donde.removeClass('shine').css({'float':'left', 'clear':'both'});
+  }
+  setTimeout(explode, 2000);
+  window.history.pushState({}, document.title, "/" + "");
+}
+$link_todos.on('click touchstart', function(){shinealo($lugar_todos);});
+$link_web.on('click touchstart', function(){shinealo($('#dis_web a'));});
+$link_3d.on('click touchstart', function(){shinealo($('#dis_3d *'));});
+$link_red.on('click touchstart', function(){shinealo($('#dis_red a'));});
+$link_vid.on('click touchstart', function(){shinealo($('#dis_vid a'));});
+$link_impr.on('click touchstart', function(){shinealo($('#dis_impr a'));});
 
-  $link_web
-    .on('click touchstart', function(){
-      var $donde = $('#dis_web a');
-      $donde.addClass('shine').css({'float':'none', 'clear':'none'});
-      function explode(){
-        $donde.removeClass('shine').css({'float':'left', 'clear':'both'});
-      }
-      setTimeout(explode, 2000);
-      window.history.pushState({}, document.title, "/" + "");
-  });
+$("a").on('click touchstart', function(event) {
+  if (this.hash !== "") {
+    event.preventDefault();
+    var hash = this.hash;
+    $('html, body').animate({
+      scrollTop: $(hash).offset().top
+    }, 800, function(){
+      window.location.hash = hash;
+      history.replaceState({}, '', '/');
+    });
+  } 
+});
 
-  $link_3d
-    .on('click touchstart', function(){
-      var $donde = $('#dis_3d *');
-      $donde.addClass('shine').css({'float':'none', 'clear':'none'});
-        function explode(){
-          $donde.removeClass('shine').css({'float':'left', 'clear':'both'});
-        }
-        setTimeout(explode, 2000);
-      window.history.pushState({}, document.title, "/" + "");
-  });
+function PuntoFn() {
+  $pst.hide();
+  $servicios.hide();
+  $punto.removeClass().addClass('neg');
+  $('#home-pres, #menu').css({'display':'block'});
+  $body_home.css({'overflow-y':'visible'});
+  $btn_serv.addClass('rotate');
+  $btn_trab
+    .addClass('scroll') 
+    .on('touchstart mouseover', function() {
+      trab_Scroll();
+    });
+  }
 
-  $link_red
-    .on('click touchstart', function(){
-      var $donde = $('#dis_red *');
+function OpenServs() {
+  $('html, body').animate({ scrollTop: $(document).css({'top':'0'})}, 1000);
+  $('body').addClass('body_servs');
+  $trabajos.hide();
+  $servicios.show();
+  $pres_black.addClass('negro_100');
+  $punto.removeClass('neg').addClass('quieto nar');
+  var $title_position = $('#pres-orange').css("width");
+  $title
+    .addClass('h1_header').html($title_home)
+    .css({'left':$title_position})
+  ;
+  $btn_serv.removeClass('rotate').addClass('quieto');
+  $btn_trab
+    .removeClass('scroll').addClass('quieto')
 
-      $donde.addClass('shine').css({'float':'none', 'clear':'none'});
-        function explode(){
-          $donde.removeClass('shine').css({'float':'left', 'clear':'both'});
-        }
-        setTimeout(explode, 2000);
-      window.history.pushState({}, document.title, "/" + "");
-  });
+    .unbind('touchstart mouseover')
+    .on('click', function() {
+        OpenTrabs();
+    });
+  }
 
-  $link_vid
-    .on('click touchstart', function(){
-      var $donde = $('#dis_vid *');
-      $donde.addClass('shine').css({'float':'none', 'clear':'none'});
-        function explode(){
-          $donde.removeClass('shine').css({'float':'left', 'clear':'both'});
-        }
-        setTimeout(explode, 2000);
-      window.history.pushState({}, document.title, "/" + "");
-  });
-
-  $link_impr
-    .on('click touchstart', function(){
-      var $donde = $('#dis_impr *');
-      $donde.addClass('shine').css({'float':'none', 'clear':'none'});
-        function explode(){
-          $donde.removeClass('shine').css({'float':'left', 'clear':'both'});
-        }
-        setTimeout(explode, 2000);
-      window.history.pushState({}, document.title, "/" + "");
-  });
-
-  // Add smooth scrolling to # links
-  $("a").on('click touchstart', function(event) {
-    if (this.hash !== "") {
-      event.preventDefault();
-      var hash = this.hash;
-      $('html, body').animate({
-        scrollTop: $(hash).offset().top
-      }, 800, function(){
-        window.location.hash = hash;
-        history.replaceState({}, '', '/');
-      });
-    } // End if
-  });
-
-  function PuntoFn() {
-    $pst.hide();
-    $servicios.hide();
-    $punto.removeClass().addClass('neg');
-    $('#home-pres, #menu').css({'display':'block'});
-    $body_home.css({'overflow-y':'visible'});
-    $btn_serv.addClass('rotate');
-    $btn_trab
-      .addClass('scroll') 
-      .on('touchstart mouseover', function() {
-        trab_Scroll();
-      });
-    }
-
-  function OpenServs() {
-    $('html, body').animate({ scrollTop: $(document).css({'top':'0'})}, 1000);
-    $('body').addClass('body_servs');
-    $trabajos.hide();
-    $servicios.show();
-    $pres_black.addClass('negro_100');
-    $punto.removeClass('neg').addClass('quieto nar');
-    var $title_position = $('#pres-orange').css("width");
-    $title
-      .addClass('h1_header').html($title_home)
-      .css({'left':$title_position})
+function OpenTrabs() {
+  $('html, body').animate({ scrollTop: $(document).css({'top':'0'})}, 1000);
+  $('body').removeClass('body_servs');
+  $trabajos.show();
+  $servicios.hide();
+  $pres_black.removeClass('negro_100');
+  $punto.removeClass('quieto nar').addClass('neg');
+  $title
+    .removeClass('h1_header').html($titulo_loco)
+    .css({'left':'0'})
     ;
-    $btn_serv.removeClass('rotate').addClass('quieto');
-    $btn_trab
-      .removeClass('scroll').addClass('quieto')
-
-      .unbind('touchstart mouseover')
-      .on('click', function() {
-         OpenTrabs();
-      });
-    } // OpenServs
-
-  function OpenTrabs() {
-    $('html, body').animate({ scrollTop: $(document).css({'top':'0'})}, 1000);
-    $('body').removeClass('body_servs'); //.addClass('body_works');
-    $trabajos.show();
-    $servicios.hide();
-    $pres_black.removeClass('negro_100');
-    $punto.removeClass('quieto nar').addClass('neg');
-    $title
-      .removeClass('h1_header').html('<span class="h1_1">Guill<span>ermo</span></span><span class="h1_2">Luy</span><span class="h1_3">'+ $title_diseno +' &amp;</span><span class="h1_4">'+ $title_progra +'</span></h1>')
-      .css({'left':'0'})
-      ;
-    $btn_serv.removeClass().addClass('servicios rotate');
-    $btn_trab.
-      removeClass().addClass('trabajos scroll')
-      .unbind('click')
-      .on('touchstart mouseover', function() {
-         trab_Scroll();
-      });
-  } // OpenTrabs
+  $btn_serv.removeClass().addClass('servicios rotate');
+  $btn_trab.
+    removeClass().addClass('trabajos scroll')
+    .unbind('click')
+    .on('touchstart mouseover', function() {
+        trab_Scroll();
+    });
+}
 
   // Funciones scrolleras:
   var trab_Scroll = function () {
-    //var x = $(this).offset().top;
     var x = $('#work_12').offset().top;
     $('html,body').animate({scrollTop: x + 100 }, 600);
   }
 
   var emp_Scroll = function () {
-    //var x = $(this).offset().top;
     var x = $('html,body').offset().top;
     $('html,body').animate({scrollTop: x + 100 }, 600);
   }
@@ -302,6 +221,24 @@ var $trab_no_mas = '#work_13',
     .on('click touchstart', function() {
       OpenServs();
     });
+
+
+//TODO: json
+var $trab_no_mas = '#work_13',
+        $trab_13 = '', // nada aun
+        $trab_12 = 'vialfe',
+        $trab_11 = 'bounous',
+        $trab_10 = 'pronto-express',
+         $trab_9 = 'auto-v5',
+         $trab_8 = 'canapina',
+         $trab_7 = 'minfraestructura',
+         $trab_6 = 'marcas',
+         $trab_5 = 'folletos',
+         $trab_4 = 'cyd-schaffer',
+         $trab_3 = 'bodyski',
+         $trab_2 = 'xava-boards',
+         $trab_1 = 'carteles';
+    
 
 // Si es movil o pc
 if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent) 
@@ -319,7 +256,7 @@ $to_top
 
     });  
 });
-var $topButtons = $('.flags, .mail, .messenger, .skype, .face, .link, #footer_nav'); // .portfolio, 
+var $topButtons = $('.flags, .mail, .messenger, .skype, .face, .link, #footer_nav');
 
 $('#home-pres').onScreen({
   doIn: function() {
@@ -332,8 +269,8 @@ $('#home-pres').onScreen({
   },
 });
 
+
 $document.scroll(function() {
-  // seccion servicios
   if($('body').hasClass( "body_servs" )) {
     if ($document.scrollTop() >= 100) { 
       $btn_trab.removeClass('quieto').addClass('scroll');
@@ -345,27 +282,24 @@ $document.scroll(function() {
     } else {
       $servicios_links.css({'top':'10vh'});
     }
-  // seccion destacados
   } else {
     if ($document.scrollTop() >= 100) { 
       $punto.addClass('quieto');
       $btn_trab.removeClass('scroll').addClass('quieto');
-      $btn_serv.removeClass('rotate').addClass('quieto') //.appendTo($footer_nav);
+      $btn_serv.removeClass('rotate').addClass('quieto');
     }
     else {
       $punto.removeClass('quieto');
       $btn_trab.removeClass('quieto').addClass('scroll');
-      $btn_serv.addClass('rotate').removeClass('quieto') //.appendTo($menu);
+      $btn_serv.addClass('rotate').removeClass('quieto');
     }
     if ($document.scrollTop() >= 950) { 
       $to_top.removeClass('como_hideado');
-      // $close_footer_nav.show();
     } else {
       $to_top.addClass('como_hideado');
-      // $close_footer_nav.hide();
     }
   }
-}); // document.scroll
+});
 
 window.onbeforeunload = function () {
   window.scrollTo(0, 0);

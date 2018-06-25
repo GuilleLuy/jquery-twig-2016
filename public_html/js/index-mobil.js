@@ -55,9 +55,9 @@
       var $ir_siguiente = '#work_' + $siguiente;
       var $ir_anterior = '#work_' + $anterior;
       if($ir_anterior == $trab_no_mas) {
-        $('.to_before').addClass('como_hideado')//.hide();
+        $('.to_before').addClass('como_hideado')
       }else{
-        $('.to_before').removeClass('como_hideado')//.show();
+        $('.to_before').removeClass('como_hideado')
       };
       if($ir_siguiente == '#work_0') {
         $('.to_next').addClass('como_hideado');
